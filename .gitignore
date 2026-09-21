@@ -1,0 +1,9 @@
+# Environments and caches
+__pycache__/
+.venv/
+.idea/
+
+# Large data and model weights
+*.pt
+data/sentinel2_raw/
+data/naip_reference/

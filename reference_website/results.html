@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Detailed Results | Sentinel-2 Super-Resolution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/results.js" defer></script>
+    <style>
+      body {
+        background-color: #f8f9fa;
+        color: #202124;
+      }
+      .results-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 2rem;
+        background: #fff;
+        border-bottom: 1px solid #e1e5e8;
+      }
+      .results-logo {
+        font-weight: 700;
+        font-size: 1.2rem;
+        letter-spacing: -0.01em;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .back-btn {
+        padding: 0.5rem 1rem;
+        border: 1px solid #cdd4dc;
+        border-radius: 4px;
+        background: #fff;
+        color: #202124;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: background 0.2s;
+      }
+      .back-btn:hover {
+        background: #f1f3f4;
+      }
+      .results-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+      
+      .page-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      
+      .page-desc {
+        color: #5f6368;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+      }
+      
+      #error-state {
+        display: none;
+        text-align: center;
+        padding: 4rem 0;
+      }
+      
+      #results-content {
+        display: none;
+        flex-direction: column;
+        gap: 2rem;
+      }
+      
+      .comparison-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      
+      .image-card {
+        background: #fff;
+        border: 1px solid #e1e5e8;
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .image-card-header {
+        padding: 1rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        border-bottom: 1px solid #e1e5e8;
+        background: #f8f9fa;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .image-wrap {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1;
+        background: #eef2f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .image-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+      
+      .metric-box {
+        background: #fff;
+        border: 1px solid #e1e5e8;
+        border-radius: 8px;
+        padding: 1.5rem;
+      }
+      
+      .metric-label {
+        font-size: 0.85rem;
+        color: #5f6368;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+      
+      .metric-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #202124;
+      }
+      
+      .maps-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        align-items: start;
+      }
+      
+      .map-item {
+        background: #fff;
+        border: 1px solid #e1e5e8;
+        border-radius: 8px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .map-item img {
+        width: 100%;
+        height: auto;
+        max-height: 420px;
+        border-radius: 4px;
+        object-fit: contain;
+        background: #eef2f5;
+        display: block;
+      }
+      
+      .map-item span {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #202124;
+        text-align: center;
+      }
+      
+      .map-desc {
+        font-size: 0.75rem;
+        color: #5f6368;
+        text-align: center;
+        margin: 0;
+        line-height: 1.4;
+      }
+      
+      .downloads-bar {
+        background: #fff;
+        border: 1px solid #e1e5e8;
+        border-radius: 8px;
+        padding: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+      
+      .downloads-bar p {
+        margin: 0;
+        font-weight: 600;
+      }
+      
+      @media (max-width: 900px) {
+        .comparison-section, .maps-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="results-header">
+      <div class="results-logo">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="6" fill="#1A73E8"/><path d="M16 8L24 24H8L16 8Z" fill="#FFF"/></svg>
+        Sentinel SR Pipeline
+      </div>
+      <a href="index.html" class="back-btn">← Back to Home</a>
+    </header>
+    
+    <main class="results-container">
+      <div id="error-state">
+        <h2 style="margin-bottom: 1rem;">No Result Data Found</h2>
+        <p style="color: #5f6368; margin-bottom: 2rem;">Please run an inference job from the home page first.</p>
+        <a href="index.html" class="button">Go to Home</a>
+      </div>
+      
+      <div id="results-content">
+        <div>
+          <h1 class="page-title">Detailed Inference Results</h1>
+          <p class="page-desc">Review full-resolution imagery, scientific quality heatmaps, and diagnostic metrics.</p>
+        </div>
+        
+        <!-- Comparison Section -->
+        <section class="comparison-section">
+          <div class="image-card">
+            <div class="image-card-header">
+              <span>Original 10m Input</span>
+              <span style="color: #5f6368; font-size: 0.75rem;">B04-B03-B02</span>
+            </div>
+            <div class="image-wrap">
+              <img id="img-lr" src="" alt="10m Input">
+            </div>
+          </div>
+          <div class="image-card">
+            <div class="image-card-header">
+              <span>Model-Inferred 2.5m-Scale Output</span>
+              <span style="color: #5f6368; font-size: 0.75rem;">RGB Preview</span>
+            </div>
+            <div class="image-wrap">
+              <img id="img-sr" src="" alt="2.5m Output">
+            </div>
+          </div>
+        </section>
+        
+        <!-- Metrics Section -->
+        <section>
+          <h2 style="font-size: 1.25rem; margin-bottom: 1rem;">Diagnostic Consistency Metrics</h2>
+          <div class="metrics-grid">
+            <div class="metric-box">
+              <div class="metric-label">TTA Disagreement (σ)</div>
+              <div class="metric-value" id="val-tta">-</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">Radiometric Consistency (Δ)</div>
+              <div class="metric-value" id="val-rad">-</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">NDVI Consistency (Δ)</div>
+              <div class="metric-value" id="val-ndvi">-</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">Clipped uint16 Pixels</div>
+              <div class="metric-value"><span id="val-clip">-</span>%</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">Inference Time</div>
+              <div class="metric-value"><span id="val-time">-</span>s</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Quality Maps Section -->
+        <section>
+          <h2 style="font-size: 1.25rem; margin-bottom: 1rem;">Quality Heatmaps</h2>
+          <div class="maps-grid" id="maps-grid">
+            <div class="map-item">
+              <img id="map-rad" src="" alt="Radiometric Consistency">
+              <span>Radiometric Consistency</span>
+              <p class="map-desc">Shows how closely the enhanced image matches the original satellite image’s brightness and reflectance.<br><strong>Colour Guide:</strong> Dark red/black = lower difference; orange/yellow/white = higher difference. Lower values generally indicate closer consistency.</p>
+            </div>
+            <div class="map-item">
+              <img id="map-diff" src="" alt="SR vs Bicubic Diff">
+              <span>SR vs Bicubic Difference</span>
+              <p class="map-desc">Shows where the AI-enhanced image differs from standard bicubic resizing.<br><strong>Colour Guide:</strong> Dark colours = smaller difference; brighter colours = larger difference.</p>
+            </div>
+            <div class="map-item">
+              <img id="map-tta" src="" alt="TTA Proxy">
+              <span>TTA Disagreement Proxy</span>
+              <p class="map-desc">Shows how much the model’s predictions vary when the input is viewed in different ways.<br><strong>Colour Guide:</strong> Purple/blue = lower disagreement; green/yellow = higher disagreement. Higher values indicate less consistent predictions.</p>
+            </div>
+            <div class="map-item">
+              <img id="map-ndvi-10" src="" alt="NDVI Consistency">
+              <span>NDVI Consistency (10m)</span>
+              <p class="map-desc">Compares vegetation-index values from the enhanced image with the original 10m input.<br><strong>Colour Guide:</strong> Blue = positive difference; white/light colours = near zero; red = negative difference.</p>
+            </div>
+            <div class="map-item">
+              <img id="map-ndvi-25" src="" alt="SR NDVI">
+              <span>SR NDVI (2.5m-scale inferred)</span>
+              <p class="map-desc">Shows the estimated vegetation pattern in the AI-enhanced output.<br><strong>Colour Guide:</strong> The colourbar represents NDVI values. Higher values generally indicate more vegetation; lower values indicate less vegetation or non-vegetated surfaces. Refer to the numerical colourbar for exact values.</p>
+            </div>
+            <div class="map-item">
+              <img id="map-ndvi-disp" src="" alt="NDVI Consist. Enlarged">
+              <span>NDVI Consistency Residual (10m)</span>
+              <p class="map-desc">Shows the difference between the enhanced and original vegetation-index values after bringing them to the same 10m scale.<br><strong>Colour Guide:</strong> Blue = positive residual; white/light colours = near zero; red = negative residual. Stronger colours indicate a larger difference.</p>
+            </div>
+          </div>
+          <p style="margin-top: 1.5rem; font-size: 0.85rem; color: #5f6368;">Each heatmap has its own colour scale. Colours should be interpreted using the colourbar beside that specific image. These are diagnostic visualizations, not proof of actual 2.5m ground-level accuracy.</p>
+        </section>
+        
+        <!-- Downloads Section -->
+        <section class="downloads-bar">
+          <p>Download Artifacts:</p>
+          <a class="button" id="dl-geotiff" href="#" target="_blank" style="padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid #cdd4dc; color: #202124; text-decoration: none; font-size: 0.9rem;">GeoTIFF (.tif)</a>
+          <a class="button" id="dl-refl" href="#" target="_blank" style="padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid #cdd4dc; color: #202124; text-decoration: none; font-size: 0.9rem;">Reflectance (.npy)</a>
+          <a class="button" id="dl-uint16" href="#" target="_blank" style="padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid #cdd4dc; color: #202124; text-decoration: none; font-size: 0.9rem;">Uint16 (.npy)</a>
+        </section>
+        
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f8fbf9" />
+    <meta name="description" content="A satellite super-resolution research showcase: explore Earth observation imagery, the proposed workflow, and validation considerations." />
+    <title>Satellite Super Resolution — ORBIT</title>
+    <link rel="icon" type="image/png" href="/assets/orbit-mark.png" />
+    <link rel="preconnect" href="https://eu-space.europa.eu" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Satellite Super Resolution home">
+        <img class="brand-icon" src="/assets/orbit-mark.png" alt="" width="42" height="42" />
+        <span class="brand-lockup"><strong>Satellite <span>Super Resolution</span></strong><small>ORBIT · Earth Observation</small></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="menu-lines" aria-hidden="true"><i></i><i></i></span><span class="menu-label">Menu</span>
+      </button>
+      <nav class="primary-nav" id="primary-nav" aria-label="Main navigation">
+        <a class="nav-link is-current" href="#home">Home</a>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="samples.html">Sample Images</a>
+        <a class="nav-link" href="#help">Help</a>
+        <a class="nav-get-started" href="#workflow">Get Started <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <img class="hero-image" src="/assets/river-forest-satellite.webp" alt="" aria-hidden="true" fetchpriority="high" />
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div class="hero-grain" aria-hidden="true"></div>
+        <div class="hero-layout">
+          <div class="hero-copy">
+            <p class="hero-kicker"><span class="kicker-mark" aria-hidden="true"></span> Earth observation · Research concept</p>
+            <h1 id="hero-title">Satellite<br /><span>Super Resolution</span></h1>
+            <p class="hero-lede">Exploring AI-based enhancement of satellite imagery for a clearer, more detailed view of our world.</p>
+            <div class="category-grid" aria-label="Potential application areas">
+              <a class="category-tile" href="#applications"><span class="category-icon icon-leaf" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M25 6C13 7 7 12 7 20c0 4 3 6 6 6 8 0 12-8 12-20Z"/><path d="M6 27c3-6 8-10 15-14"/></svg></span><span>Forest<br />Monitoring</span></a>
+              <a class="category-tile" href="#applications"><span class="category-icon icon-city" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 27h22M8 27V12h8v15m0 0V5h9v22M11 16h2m-2 4h2m6-10h2m3 0h1m-6 5h2m3 0h1m-6 5h2m3 0h1"/></svg></span><span>Urban<br />Analysis</span></a>
+              <a class="category-tile" href="#applications"><span class="category-icon icon-crop" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 28V13m0 5c-7 0-10-4-10-10 6 0 10 3 10 10Zm0 5c0-7 4-10 10-10 0 6-3 10-10 10Z"/></svg></span><span>Agricultural<br />Observation</span></a>
+              <a class="category-tile" href="#applications"><span class="category-icon icon-water" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4S8 14 8 20a8 8 0 0 0 16 0c0-6-8-16-8-16Z"/><path d="M12 21c.5 2 2 3 4 3"/></svg></span><span>Water Body<br />Monitoring</span></a>
+            </div>
+            <div class="hero-actions">
+              <a class="button button-hero" href="#workflow">Get Started <span aria-hidden="true">→</span></a>
+              <span class="hero-scope">10 m Sentinel-2 example <i></i> &lt;4 m study target</span>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Illustrative satellite-style terrain scene with a 3D zoom inset">
+            <div class="map-target" aria-hidden="true"><span></span></div>
+            <svg class="zoom-connector" viewBox="0 0 440 260" preserveAspectRatio="none" aria-hidden="true"><path d="M54 173 C142 155 167 104 242 83 S347 66 412 64" /></svg>
+            <figure class="zoom-card">
+              <div class="zoom-photo" role="img" aria-label="Zoomed illustrative crop from the same fictional terrain scene; this is not a super-resolution model output.">
+                <img src="/assets/river-forest-satellite.webp" alt="" aria-hidden="true" />
+                <span class="zoom-crosshair" aria-hidden="true"></span>
+              </div>
+              <figcaption><span><i class="zoom-dot"></i> ILLUSTRATIVE DETAIL</span><span>VIEW ONLY</span></figcaption>
+            </figure>
+            <div class="visual-note"><span class="note-pin" aria-hidden="true">⌖</span><span>Fictional terrain visualization<br /><b>Not live satellite data</b></span></div>
+            <div class="visual-depth depth-one" aria-hidden="true"></div>
+            <div class="visual-depth depth-two" aria-hidden="true"></div>
+          </div>
+        </div>
+        <a class="hero-scroll" href="#workflow"><span class="scroll-line" aria-hidden="true"></span> Explore the workflow</a>
+      </section>
+
+      <section class="workflow-section" id="workflow" aria-labelledby="workflow-title">
+        <div class="section-wrap">
+          <div class="section-heading workflow-heading">
+            <div><p class="section-kicker">A simple four-part workflow</p><h2 id="workflow-title">What You Can Do</h2></div>
+            <p>Upload a genuine Sentinel-2 patch to run the 4× super-resolution inference pipeline.</p>
+          </div>
+          <div class="workflow-grid">
+            <article class="workflow-card" aria-labelledby="upload-title">
+              <div class="workflow-card-top"><span class="step-pill">01</span><span class="workflow-icon icon-upload" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 21V5m-6 6 6-6 6 6M6 20v7h20v-7"/></svg></span></div>
+              <h3 id="upload-title">Upload Sentinel-2 GeoTIFF</h3>
+              <p>Upload a <strong>4-band GeoTIFF</strong> with bands in the exact order <strong>B02, B03, B04, B08</strong> at 10 m resolution. The centre 64×64 pixel patch will be processed.</p>
+              <input class="visually-hidden" id="image-input" type="file" accept=".tif,.tiff" aria-describedby="file-status" />
+              <div class="card-actions card-actions-wrap">
+                <label class="small-action" for="image-input">Select GeoTIFF</label>
+                <button class="small-action small-action-quiet" type="button" id="use-sample">Clear</button>
+              </div>
+              <div class="local-preview" id="local-preview" hidden><img id="local-preview-image" alt="Local image preview" /><span id="local-preview-name" style="word-break: break-all;"></span></div>
+              <p class="card-status" id="file-status" role="status" aria-live="polite">No file selected. Upload a 4-band Sentinel-2 GeoTIFF (.tif / .tiff).</p>
+            </article>
+
+            <article class="workflow-card" aria-labelledby="meta-title">
+              <div class="workflow-card-top"><span class="step-pill">02</span><span class="workflow-icon icon-region" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 7h22M5 16h22M5 25h22"/><circle cx="12" cy="7" r="2.6"/><circle cx="22" cy="16" r="2.6"/><circle cx="10" cy="25" r="2.6"/></svg></span></div>
+              <h3 id="meta-title">GeoTIFF Validation</h3>
+              <p>Extracted automatically from your uploaded file.</p>
+              <ul class="meta-list" id="meta-list" style="list-style: none; padding: 0; margin: 12px 0; font-size: 0.85rem; background: #eef2f5; border-radius: 6px; padding: 12px;">
+                <li style="margin-bottom: 4px;"><b>Bands:</b> <span id="meta-bands">-</span></li>
+                <li style="margin-bottom: 4px;"><b>Pixel size:</b> <span id="meta-shape">-</span></li>
+                <li style="margin-bottom: 4px;"><b>Dimensions:</b> <span id="meta-crs">-</span></li>
+                <li><b>File size:</b> <span id="meta-pixel">-</span></li>
+              </ul>
+              <p class="card-status" id="meta-status">Waiting for GeoTIFF upload.</p>
+            </article>
+
+            <article class="workflow-card" aria-labelledby="generate-title">
+              <div class="workflow-card-top"><span class="step-pill">03</span><span class="workflow-icon icon-generate" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="m17 4-2 8-7 3 7 2 2 8 2-8 7-2-7-3-2-8Z"/><path d="m6 5-.8 3L3 9l2.2.7L6 12l.8-2.3L9 9l-2.2-1L6 5Z"/></svg></span></div>
+              <h3 id="generate-title">Generate Super Resolution</h3>
+              <p>Run the 4× super-resolution inference on the centre 64×64 patch of your uploaded GeoTIFF.</p>
+              <button class="small-action small-action-generate" id="generate-button" type="button">Run Inference <span aria-hidden="true">→</span></button>
+              <p class="card-status" id="model-status" role="status" aria-live="polite">Ready to run.</p>
+            </article>
+
+            <article class="workflow-card" aria-labelledby="download-title">
+              <div class="workflow-card-top"><span class="step-pill">04</span><span class="workflow-icon icon-download" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4v16m-6-6 6 6 6-6M6 22v5h20v-5"/></svg></span></div>
+              <h3 id="download-title">Download Output</h3>
+              <p>Export the enhanced georeferenced artifacts after model inference.</p>
+              
+              <p style="font-size: 0.9rem; margin-top: 1rem; margin-bottom: 1rem; color: #3c4043;">Results and download links will appear in the viewer below once processing succeeds.</p>
+              <button class="small-action" id="download-button" type="button" aria-describedby="download-status" style="cursor: pointer;">Scroll to Viewer ↓</button>
+              
+              <p class="card-status" id="download-status">Awaiting completion.</p>
+            </article>
+          </div>
+          <p class="workflow-disclaimer"><span aria-hidden="true">ⓘ</span> The centre 64×64 pixel patch is automatically extracted. Bands must be ordered B02, B03, B04, B08 with band descriptions embedded in the GeoTIFF.</p>
+        </div>
+      </section>
+
+      <section class="about-section" id="about" aria-labelledby="about-title">
+        <div class="section-wrap about-layout">
+          <div class="about-copy"><p class="section-kicker">About the research concept</p><h2 id="about-title">A sharper view is a <em>goal,</em> not a guarantee.</h2><p>Medium-resolution imagery brings wide-area coverage and frequent revisits. The proposed project explores generative deep learning to infer useful fine-scale detail while preserving the original geospatial and spectral relationships.</p><div class="about-tags"><span>Pre-process</span><i aria-hidden="true">→</i><span>Train</span><i aria-hidden="true">→</i><span>Enhance</span><i aria-hidden="true">→</i><span>Validate</span></div></div>
+          <div class="resolution-card" aria-label="Illustrative project objective: 10 meter Sentinel-2 imagery toward a target below 4 meters, subject to validation">
+            <div class="resolution-card-top"><span>PROJECT OBJECTIVE</span><span class="target-badge">TO VALIDATE</span></div>
+            <div class="resolution-flow"><div><small>INPUT EXAMPLE</small><strong>10<span>m</span></strong><b>Sentinel-2</b></div><span class="resolution-arrow" aria-hidden="true">→</span><div class="target-value"><small>STUDY TARGET</small><strong>&lt;4<span>m</span></strong><b>Not achieved performance</b></div></div>
+            <div class="resolution-card-bottom"><span><i></i> Spatial consistency</span><span><i></i> Spectral consistency</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="applications-section" id="applications" aria-labelledby="applications-title">
+        <div class="section-wrap">
+          <div class="section-heading"><div><p class="section-kicker">Potential applications</p><h2 id="applications-title">More detail for decisions that matter.</h2></div><p>Possible use areas from the project brief; usefulness depends on rigorous validation.</p></div>
+          <div class="application-row">
+            <article><span class="application-number">01</span><span class="application-symbol app-leaf" aria-hidden="true">✳</span><h3>Forest Monitoring</h3><p>Study land-cover and vegetation patterns.</p></article>
+            <article><span class="application-number">02</span><span class="application-symbol app-city" aria-hidden="true">▦</span><h3>Urban Analysis</h3><p>Inspect built areas, roads, and city change.</p></article>
+            <article><span class="application-number">03</span><span class="application-symbol app-crop" aria-hidden="true">⌁</span><h3>Agricultural Observation</h3><p>Explore crop patterns and field boundaries.</p></article>
+            <article><span class="application-number">04</span><span class="application-symbol app-water" aria-hidden="true">◌</span><h3>Water Body Monitoring</h3><p>Review water edges and landscape context.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="samples-section" id="samples" aria-labelledby="samples-title">
+        <div class="section-wrap samples-layout">
+          <div class="samples-copy">
+            <p class="section-kicker">Results Ready</p>
+            <h2 id="samples-title">Inference<br /><em>Complete.</em></h2>
+            <p>Your Sentinel-2 patch has been successfully processed.</p>
+            
+            <div id="results-compact-view" style="display: none; margin-top: 1.5rem;">
+              <p style="color: #3c4043; margin-bottom: 1.5rem; font-size: 1.1rem;">The 4× super-resolution inference pipeline has generated the full scientific georeferenced output, diagnostic metrics, and quality heatmaps.</p>
+              <a href="results.html" class="button" id="view-results-button" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; font-size: 1.1rem; text-decoration: none;">View Full Results <span>→</span></a>
+            </div>
+            
+            <div id="results-placeholder-view" style="margin-top: 1.5rem;">
+              <p style="color: #5f6368; font-size: 0.9rem;">Awaiting inference...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="help-section" id="help" aria-labelledby="help-title">
+        <div class="section-wrap help-layout">
+          <div class="help-icon" aria-hidden="true">!</div>
+          <div class="help-copy"><p class="section-kicker">Help · Scientific note</p><h2 id="help-title">Inferred detail is not the same as observed detail.</h2><p>Super-resolution models can infer fine textures from learned patterns. A convincing road, roof, or field edge is not proof it exists on the ground. Any future output must be validated against high-resolution reference data, with uncertainty and errors reported clearly.</p></div>
+          <div class="help-equation"><span>INFERRED</span><b>≠</b><span>OBSERVED</span></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand"><img src="/assets/orbit-mark.png" width="34" height="34" alt="" /><span><b>ORBIT</b><small>Satellite Super Resolution</small></span></div>
+      <p>Research concept showcase · Fictional hero terrain is labelled as illustrative.</p>
+      <p class="affiliation">National Technical Research Organisation (NTRO)<br /><span>Confirm affiliation before publishing</span></p>
+      <a class="back-top" href="#home">Back to top ↑</a>
+    </footer>
+  </body>
+</html>

@@ -1,9 +1,45 @@
-# Environments and caches
-__pycache__/
-.venv/
-.idea/
+﻿# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
 
-# Large data and model weights
+# Python environment and cache
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Satellite imagery and datasets
+data/
+*.SAFE/
+*.zip
+*.jp2
+*.tif
+*.tiff
+*.npy
+
+# Generated outputs
+outputs/
+
+# Model weights and checkpoints
 *.pt
-data/sentinel2_raw/
-data/naip_reference/
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# IDE and operating system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Sample Images | Sentinel-2 Super-Resolution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/samples.js" defer></script>
+  <style>
+    body {
+      background-color: #f8f9fa;
+      color: #202124;
+    }
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: #fff;
+      border-bottom: 1px solid #e1e5e8;
+    }
+    .gallery-logo {
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #16322e;
+    }
+    .back-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid #cdd4dc;
+      border-radius: 4px;
+      background: #fff;
+      color: #202124;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .back-btn:hover {
+      background: #f1f3f4;
+    }
+    .gallery-container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    .page-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: #16322e;
+      letter-spacing: -0.03em;
+    }
+    .page-desc {
+      color: #5f6368;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      max-width: 800px;
+    }
+    .disclaimer-note {
+      background: #fff1d7;
+      border: 1px solid #f3e4c4;
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      color: #6d5e41;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 0.6rem 1.2rem;
+      border: 1px solid #cdd4dc;
+      border-radius: 99px;
+      background: #fff;
+      color: #5f6368;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover {
+      border-color: #18b87a;
+      color: #18b87a;
+    }
+    .filter-btn.active {
+      background: #138f67;
+      border-color: #138f67;
+      color: #fff;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e1e5e8;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 24px rgba(27,63,48,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(27,63,48,0.08);
+    }
+    .card-images {
+      display: flex;
+      width: 100%;
+      background: #eef2f5;
+      position: relative;
+      cursor: zoom-in;
+    }
+    .card-images.single-image {
+      flex-direction: column;
+    }
+    .card-images img {
+      width: 50%;
+      object-fit: cover;
+      aspect-ratio: 1;
+    }
+    .card-images.single-image img {
+      width: 100%;
+      aspect-ratio: auto;
+      height: 250px;
+    }
+    .card-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .card-tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .tag {
+      padding: 0.25rem 0.6rem;
+      background: #eff8f3;
+      color: #138f67;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .tag-scale {
+      background: #f4f1fb;
+      color: #694baf;
+    }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #16322e;
+      margin: 0 0 0.25rem 0;
+    }
+    .card-desc {
+      font-size: 0.85rem;
+      color: #6d7d75;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .img-label {
+      position: absolute;
+      bottom: 8px;
+      padding: 4px 8px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 600;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    .label-left { left: 8px; }
+    .label-right { right: 8px; }
+    
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.9);
+      padding: 2rem;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    #lightbox.active {
+      display: flex;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0.5rem;
+    }
+    .lightbox-content {
+      display: flex;
+      gap: 1rem;
+      max-width: 100%;
+      max-height: 85vh;
+    }
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+    .lightbox-caption {
+      color: white;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="gallery-header">
+    <div class="gallery-logo">
+      <img src="/assets/orbit-mark.png" alt="" width="32" height="32" style="border-radius:6px; object-fit:cover;" />
+      ORBIT Samples
+    </div>
+    <a href="index.html" class="back-btn">← Back to Home</a>
+  </header>
+  
+  <main class="gallery-container">
+    <h1 class="page-title">Sample Images</h1>
+    <p class="page-desc">Explore pre-generated project samples comparing original 10m Sentinel-2 inputs to 4× model-inferred outputs.</p>
+    
+    <div class="disclaimer-note">
+      <span style="font-size: 1.5rem;">ⓘ</span>
+      <div>
+        <strong>Scientific Note:</strong> These are previously generated project samples for demonstration. Model-inferred 2.5m-scale outputs are not validated against genuine 2.5m ground truth.
+      </div>
+    </div>
+    
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="forest">Forest</button>
+      <button class="filter-btn" data-filter="urban">Urban</button>
+      <button class="filter-btn" data-filter="agriculture">Agriculture</button>
+      <button class="filter-btn" data-filter="water">Water</button>
+    </div>
+    
+    <div class="grid" id="gallery-grid">
+      <!-- Injected by JS -->
+    </div>
+  </main>
+  
+  <div id="lightbox">
+    <button class="lightbox-close" id="lightbox-close">×</button>
+    <div class="lightbox-content" id="lightbox-content"></div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+</body>
+</html>
